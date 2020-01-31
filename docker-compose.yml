@@ -1,0 +1,31 @@
+version: "3.7"
+#ithah8eocheigheak2Jamaqu6Ceij6zo db root pw
+services:
+  wordpress:
+    image: wordpress
+    restart: always
+    ports:
+      - 80:80
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: wp
+      WORDPRESS_DB_PASSWORD: wpSecret
+      WORDPRESS_DB_NAME: wordpress
+    volumes:
+      - type: bind
+        source: ./wp/
+        target: /var/www/html/wp-content/
+
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wp
+      MYSQL_PASSWORD: wpSecret
+      MYSQL_RANDOM_ROOT_PASSWORD: "1"
+    volumes:
+      - db:/var/lib/mysql
+
+volumes:
+  db:
